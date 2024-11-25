@@ -6,6 +6,7 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,                 // Ignoriere Typüberprüfungen in Abhängigkeiten
     "types": ["jest"]                     // Nur jest-Typen verwenden
