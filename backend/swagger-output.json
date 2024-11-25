@@ -1,0 +1,187 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000/api/users",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                },
+                "userId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+          "summary": "User login",
+          "description": "Authenticate a user with username and password",
+          "parameters": [
+              {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "schema": {
+                      "type": "object",
+                      "properties": {
+                          "username": {
+                              "type": "string",
+                              "example": "johndoe"
+                          },
+                          "pw": {
+                              "type": "string",
+                              "example": "password123"
+                          }
+                      },
+                      "required": [
+                          "username",
+                          "pw"
+                      ]
+                  }
+              }
+          ],
+          "responses": {
+              "200": {
+                  "description": "Login successful",
+                  "schema": {
+                      "type": "object",
+                      "properties": {
+                          "message": {
+                              "type": "string",
+                              "example": "Login successful"
+                          },
+                          "role": {
+                              "type": "string",
+                              "example": "USER"
+                          },
+                          "user": {
+                              "type": "object"
+                          }
+                      }
+                  }
+              },
+              "404": {
+                  "description": "User not found"
+              },
+              "401": {
+                  "description": "Invalid password"
+              },
+              "500": {
+                  "description": "Internal server error"
+              }
+          }
+      }
+  },
+    "/notes/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}
