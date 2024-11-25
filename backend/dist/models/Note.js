@@ -15,15 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Note = void 0;
 const database_1 = __importDefault(require("../database"));
 class Note {
-    constructor(title, content, id) {
+    constructor(title, content, user_id, id) {
         this.title = title;
         this.content = content;
         this.id = id;
+        this.user_id = user_id;
     }
     // Create a new note
     static create(note) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [result] = yield database_1.default.execute('INSERT INTO notes (title, content) VALUES (?, ?)', [note.title, note.content]);
+            const [result] = yield database_1.default.execute('INSERT INTO notes (title, content, user_id) VALUES (?, ?, ?)', [note.title, note.content, note.user_id]);
             note.id = result.insertId;
             return note;
         });

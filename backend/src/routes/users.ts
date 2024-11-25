@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { User } from '../models/User';
+import { Note } from '../models/Note';
 import pool from '../database';
 
 const usersRouter = Router();
@@ -101,6 +102,30 @@ usersRouter.post('/login', async (req, res) :Promise<any> =>  {
     } catch (err) {
         console.error('Error fetching notes:', err); // Log the erro
         res.status(500).json({ error: 'Failed to fetch notes' });
+    }
+  });
+
+  usersRouter.delete('/:id', async (req, res): Promise<any> => {
+    const id = req.params.id
+    try {
+      const success = await pool.query('DELETE FROM notes WHERE id = ?', [id]);
+      if (success) {
+        return res.status(200).json({ message: 'Note deleted' });
+      }
+      res.status(404).json({ message: 'Note not found' });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to delete note', error });
+    }
+  });
+
+  usersRouter.post('/', async (req, res) => {
+    try {
+      const { title, content, userId } = req.body;
+      const newNote = new Note(title, content, userId);
+      const createdNote = await Note.create(newNote);
+      res.status(201).json(createdNote);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to create note', error });
     }
   });
 

@@ -1,3 +1,15 @@
 <h1>Your Personal Notes</h1>
 <p>Welcome to your personal notes page!</p>
-<!-- Add functionality like notes display and management -->
+<div *ngIf="notes?.length === 0">No notes found. Create one!</div>
+<ul>
+  <section class="grid-parent">
+  
+  <li *ngFor="let note of notes">
+    <div class="grid-child">
+    <h1 class="title">{{ note.title }}</h1>
+    <p class="copy">{{ note.content }}</p>
+    <button type="submit" (click)="deleteNote(note.id)">Delete</button>
+  </div>
+  </li>
+</section>
+</ul>

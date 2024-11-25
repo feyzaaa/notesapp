@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const User_1 = require("../models/User");
+const Note_1 = require("../models/Note");
 const database_1 = __importDefault(require("../database"));
 const usersRouter = (0, express_1.Router)();
 // Create a new user
@@ -110,6 +111,30 @@ usersRouter.get('/notes/:userId', (req, res) => __awaiter(void 0, void 0, void 0
     catch (err) {
         console.error('Error fetching notes:', err); // Log the erro
         res.status(500).json({ error: 'Failed to fetch notes' });
+    }
+}));
+usersRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    try {
+        const success = yield database_1.default.query('DELETE FROM notes WHERE id = ?', [id]);
+        if (success) {
+            return res.status(200).json({ message: 'Note deleted' });
+        }
+        res.status(404).json({ message: 'Note not found' });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Failed to delete note', error });
+    }
+}));
+usersRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { title, content, userId } = req.body;
+        const newNote = new Note_1.Note(title, content, userId);
+        const createdNote = yield Note_1.Note.create(newNote);
+        res.status(201).json(createdNote);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Failed to create note', error });
     }
 }));
 exports.default = usersRouter;

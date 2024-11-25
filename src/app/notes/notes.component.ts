@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { NoteService } from '../services/note.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 
@@ -7,17 +8,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
   selector: 'app-notes',
   standalone: true,
   imports: [CommonModule], // Include CommonModule
-  template: `
-    <h1>Your Notes</h1>
-<div *ngIf="notes?.length === 0">No notes found. Create one!</div>
-<ul>
-  <li *ngFor="let note of notes">
-    <h3>{{ note.title }}</h3>
-    <p>{{ note.content }}</p>
-  </li>
-</ul>
-
-  `,
+  templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css'],
 })
 export class NotesComponent implements OnInit {
@@ -48,4 +39,22 @@ export class NotesComponent implements OnInit {
       }
     );
   }
+
+    // Delete a specific note
+    deleteNote(noteId: number): void {
+      if (!confirm('Are you sure you want to delete this note?')) {
+        return; // Cancel deletion if user clicks "Cancel"
+      }
+  
+      this.userService.deleteNote(noteId).subscribe(
+        () => {
+          // Remove the deleted note from the notes array
+          this.notes = this.notes.filter(note => note.id !== noteId);
+          alert('Note deleted successfully');
+        },
+        (error) => {
+          console.error('Failed to delete note', error);
+        }
+      );
+    }
 }

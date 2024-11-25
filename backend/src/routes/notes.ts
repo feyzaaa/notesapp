@@ -8,8 +8,8 @@ const notesRouter = Router();
 // Create a new note
 notesRouter.post('/', async (req, res) => {
   try {
-    const { title, content } = req.body;
-    const newNote = new Note(title, content);
+    const { title, content, user_id} = req.body;
+    const newNote = new Note(title, content, user_id);
     const createdNote = await Note.create(newNote);
     res.status(201).json(createdNote);
   } catch (error) {
@@ -47,8 +47,8 @@ notesRouter.get('/notes/:id', async (req, res):Promise<any> => {
 // Update a note
 notesRouter.put('/:id', async (req, res):Promise<any> => {
   try {
-    const { title, content } = req.body;
-    const updatedNote = new Note(title, content);
+    const { title, content, user_id} = req.body;
+    const updatedNote = new Note(title, content, user_id);
     const success = await Note.update(parseInt(req.params.id, 10), updatedNote);
     if (success) {
       return res.status(200).json({ message: 'Note updated' });

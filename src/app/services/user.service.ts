@@ -36,5 +36,11 @@ export class UserService {
     return this.http.get<any[]>(`${this.apiUrl}/notes/${userId}`);
     this.userId = userId;
   }
-  
+
+  // Delete a specific note
+  deleteNote(noteId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${noteId}`);
+  }
+
+
 }

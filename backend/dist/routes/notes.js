@@ -16,8 +16,8 @@ const notesRouter = (0, express_1.Router)();
 // Create a new note
 notesRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title, content } = req.body;
-        const newNote = new Note_1.Note(title, content);
+        const { title, content, user_id } = req.body;
+        const newNote = new Note_1.Note(title, content, user_id);
         const createdNote = yield Note_1.Note.create(newNote);
         res.status(201).json(createdNote);
     }
@@ -53,8 +53,8 @@ notesRouter.get('/notes/:id', (req, res) => __awaiter(void 0, void 0, void 0, fu
 // Update a note
 notesRouter.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title, content } = req.body;
-        const updatedNote = new Note_1.Note(title, content);
+        const { title, content, user_id } = req.body;
+        const updatedNote = new Note_1.Note(title, content, user_id);
         const success = yield Note_1.Note.update(parseInt(req.params.id, 10), updatedNote);
         if (success) {
             return res.status(200).json({ message: 'Note updated' });
