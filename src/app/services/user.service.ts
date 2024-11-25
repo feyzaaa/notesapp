@@ -15,7 +15,7 @@ export interface User {
 })
 export class UserService {
   private apiUrl = 'http://localhost:3000/api/users'; // Backend API for users
-
+  private userId: number | undefined;
   constructor(private http: HttpClient) {}
 
   // Register a new user
@@ -29,6 +29,12 @@ export class UserService {
       `${this.apiUrl}/login`,
       credentials
     );
+  }
+
+  // Fetch notes for a specific user by user ID
+  getUserNotes(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/notes/${userId}`);
+    this.userId = userId;
   }
   
 }

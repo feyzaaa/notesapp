@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService, User } from '../services/user.service';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,10 +8,10 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   // Register a user
   register(displayname: string, username: string, pw: string): void {
@@ -31,9 +32,11 @@ export class HomeComponent {
   login(username: string, pw: string): void {
     this.userService.login({ username, pw }).subscribe(
       (response) => {
-        alert(`Login successful! You are logged in as: ${response.role}`);
+        alert(`Login successful! Welcome, ${response.user.displayname}`);
         console.log('User logged in:', response.user);
-        // Use the role and user details for further logic
+        const userId = response.user.id;
+        // Navigate to the personal notes page
+        this.router.navigate(['/notes'], { state: { userId } });
       },
       (error) => {
         alert('Login failed!');
@@ -42,4 +45,3 @@ export class HomeComponent {
     );
   }
 }
-

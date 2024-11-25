@@ -38,7 +38,7 @@ notesRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 }));
 // Get a note by ID
-notesRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+notesRouter.get('/notes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const note = yield Note_1.Note.getById(parseInt(req.params.id, 10));
         if (!note) {

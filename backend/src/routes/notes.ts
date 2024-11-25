@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Note } from '../models/Note';
 console.log('Note Model:', Note);
+import pool from '../database';
 
 const notesRouter = Router();
 
@@ -31,7 +32,7 @@ notesRouter.get('/', async (req, res) => {
 
 
 // Get a note by ID
-notesRouter.get('/:id', async (req, res):Promise<any> => {
+notesRouter.get('/notes/:id', async (req, res):Promise<any> => {
   try {
     const note = await Note.getById(parseInt(req.params.id, 10));
     if (!note) {
@@ -70,5 +71,7 @@ notesRouter.delete('/:id', async (req, res): Promise<any> => {
     res.status(500).json({ message: 'Failed to delete note', error });
   }
 });
+
+
 
 export default notesRouter;

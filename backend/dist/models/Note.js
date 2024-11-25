@@ -38,7 +38,7 @@ class Note {
     // Get a note by ID
     static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield database_1.default.query('SELECT * FROM notes WHERE id = ?', [id]);
+            const [rows] = yield database_1.default.query('SELECT * FROM notes WHERE user_id = ?', [id]);
             if (rows.length === 0)
                 return null;
             return rows[0];

@@ -99,4 +99,17 @@ usersRouter.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(500).json({ message: 'Login failed', error });
     }
 }));
+usersRouter.get('/notes/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.userId; // Benutzer-ID aus der Anfrage-URL
+    console.log('Fetching notes for userId:', userId); // Debug
+    try {
+        const [notes] = yield database_1.default.query('SELECT * FROM notes WHERE user_id = ?', [userId]);
+        console.log('Fetched notes:', notes); // Debug
+        res.json(notes);
+    }
+    catch (err) {
+        console.error('Error fetching notes:', err); // Log the erro
+        res.status(500).json({ error: 'Failed to fetch notes' });
+    }
+}));
 exports.default = usersRouter;

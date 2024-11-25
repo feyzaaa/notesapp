@@ -29,7 +29,7 @@ export class Note {
 
   // Get a note by ID
   static async getById(id: number): Promise<Note | null> {
-    const [rows] = await pool.query('SELECT * FROM notes WHERE id = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM notes WHERE user_id = ?', [id]);
     if ((rows as any).length === 0) return null;
     return (rows as any)[0] as Note;
   }
