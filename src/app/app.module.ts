@@ -6,8 +6,7 @@ import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
-  imports: [BrowserModule, HttpClientModule],
-  providers: [],
-  bootstrap: [AppComponent],
+  imports: [BrowserModule, HttpClientModule], // Add HttpClientModule here
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

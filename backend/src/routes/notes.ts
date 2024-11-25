@@ -2,10 +2,10 @@ import { Router } from 'express';
 import { Note } from '../models/Note';
 console.log('Note Model:', Note);
 
-const router = Router();
+const notesRouter = Router();
 
 // Create a new note
-router.post('/createNote', async (req, res) => {
+notesRouter.post('/', async (req, res) => {
   try {
     const { title, content } = req.body;
     const newNote = new Note(title, content);
@@ -16,10 +16,10 @@ router.post('/createNote', async (req, res) => {
   }
 });
 
-router.get('/GetNotes',  (req, res) => {
-  console.log('Route /GetNotes called');
+notesRouter.get('/', async (req, res) => {
+  console.log('GET /api/notes endpoint hit');
   try {
-    const notes =  Note.getAll();
+    const notes = await Note.getAll(); // `await` hinzufügen
     console.log('Notes fetched:', notes);
     res.status(200).json(notes);
   } catch (error) {
@@ -28,8 +28,10 @@ router.get('/GetNotes',  (req, res) => {
   }
 });
 
+
+
 // Get a note by ID
-router.get('/GetNote/:id', async (req, res):Promise<any> => {
+notesRouter.get('/:id', async (req, res):Promise<any> => {
   try {
     const note = await Note.getById(parseInt(req.params.id, 10));
     if (!note) {
@@ -42,7 +44,7 @@ router.get('/GetNote/:id', async (req, res):Promise<any> => {
 });
 
 // Update a note
-router.put('/PutNote/:id', async (req, res):Promise<any> => {
+notesRouter.put('/:id', async (req, res):Promise<any> => {
   try {
     const { title, content } = req.body;
     const updatedNote = new Note(title, content);
@@ -57,7 +59,7 @@ router.put('/PutNote/:id', async (req, res):Promise<any> => {
 });
 
 // Delete a note
-router.delete('/DeleteNote/:id', async (req, res): Promise<any> => {
+notesRouter.delete('/:id', async (req, res): Promise<any> => {
   try {
     const success = await Note.delete(parseInt(req.params.id, 10));
     if (success) {
@@ -69,4 +71,4 @@ router.delete('/DeleteNote/:id', async (req, res): Promise<any> => {
   }
 });
 
-export default router;
+export default notesRouter;

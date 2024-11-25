@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {HomeComponent} from './home/home.component';
-import {NotesComponent} from './notes/notes.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HomeComponent, NotesComponent],
+  imports: [HomeComponent, FormsModule,HttpClientModule],
   template: `
     <main>
       <header class="brand-name">

@@ -11,9 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Note_1 = require("../models/Note");
-const router = (0, express_1.Router)();
+console.log('Note Model:', Note_1.Note);
+const notesRouter = (0, express_1.Router)();
 // Create a new note
-router.post('/createNote', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+notesRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title, content } = req.body;
         const newNote = new Note_1.Note(title, content);
@@ -24,18 +25,20 @@ router.post('/createNote', (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(500).json({ message: 'Failed to create note', error });
     }
 }));
-// Get all notes
-router.get('/GetNotes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+notesRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('GET /api/notes endpoint hit');
     try {
-        const notes = yield Note_1.Note.getAll();
+        const notes = yield Note_1.Note.getAll(); // `await` hinzufügen
+        console.log('Notes fetched:', notes);
         res.status(200).json(notes);
     }
     catch (error) {
+        console.error('Error fetching notes:', error);
         res.status(500).json({ message: 'Failed to retrieve notes', error });
     }
 }));
 // Get a note by ID
-router.get('/GetNote/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+notesRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const note = yield Note_1.Note.getById(parseInt(req.params.id, 10));
         if (!note) {
@@ -48,7 +51,7 @@ router.get('/GetNote/:id', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 // Update a note
-router.put('/PutNote/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+notesRouter.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title, content } = req.body;
         const updatedNote = new Note_1.Note(title, content);
@@ -63,7 +66,7 @@ router.put('/PutNote/:id', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 // Delete a note
-router.delete('/DeleteNote/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+notesRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const success = yield Note_1.Note.delete(parseInt(req.params.id, 10));
         if (success) {
@@ -75,4 +78,4 @@ router.delete('/DeleteNote/:id', (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(500).json({ message: 'Failed to delete note', error });
     }
 }));
-exports.default = router;
+exports.default = notesRouter;

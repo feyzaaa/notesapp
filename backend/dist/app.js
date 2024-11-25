@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const notes_1 = __importDefault(require("./routes/notes"));
+const users_1 = __importDefault(require("./routes/users"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
     res.send('Backend is working!');
 });
 app.use('/api/notes', notes_1.default);
+app.use('/api/users', users_1.default);
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
