@@ -4,18 +4,20 @@ export class Note {
   id?: number;
   title: string;
   content: string;
+  user_id: number;
 
-  constructor(title: string, content: string, id?: number) {
+  constructor(title: string, content: string, user_id: number, id?: number) {
     this.title = title;
     this.content = content;
     this.id = id;
+    this.user_id = user_id
   }
 
   // Create a new note
   static async create(note: Note): Promise<Note> {
     const [result] = await pool.execute(
-      'INSERT INTO notes (title, content) VALUES (?, ?)',
-      [note.title, note.content]
+      'INSERT INTO notes (title, content, user_id) VALUES (?, ?, ?)',
+      [note.title, note.content, note.user_id]
     );
     note.id = (result as any).insertId;
     return note;
@@ -29,7 +31,7 @@ export class Note {
 
   // Get a note by ID
   static async getById(id: number): Promise<Note | null> {
-    const [rows] = await pool.query('SELECT * FROM notes WHERE id = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM notes WHERE user_id = ?', [id]);
     if ((rows as any).length === 0) return null;
     return (rows as any)[0] as Note;
   }

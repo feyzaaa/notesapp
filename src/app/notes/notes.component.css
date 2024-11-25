@@ -1,0 +1,49 @@
+@import url("https://use.typekit.net/zjz7xco.css");
+body {
+  margin: 0;
+}
+
+html {
+  color: #1d1d1d;
+  font-family: "source-sans-pro", sans-serif;
+  font-smoothing: antialiased;
+  line-height: 1.4;
+  text-rendering: optimizeLegibility;
+}
+
+.grid-parent {
+  display: grid;
+  grid-auto-flow: dense;
+  grid-gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  padding: 1.25rem;
+}
+
+.grid-child {
+  background-color: gainsboro;
+  border: 1px solid #b6b6b6;
+  border-radius: 3px;
+  padding: 1.25rem;
+}
+.grid-child:nth-of-type(4n) {
+  grid-column: auto/span 2;
+}
+
+.title {
+  margin: 0;
+}
+
+.copy {
+  margin: 0.625rem 0;
+}
+
+button {
+    display: block;
+    padding: 10px;
+    border: solid 1px var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    width: 32%;
+    margin: 10pt auto;
+}

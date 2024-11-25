@@ -12,52 +12,53 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Note = void 0;
+exports.User = void 0;
 const database_1 = __importDefault(require("../database"));
-class Note {
-    constructor(title, content, user_id, id) {
-        this.title = title;
-        this.content = content;
+class User {
+    constructor(displayname, username, pw, role = 'USER', id) {
+        this.displayname = displayname;
+        this.username = username;
+        this.pw = pw;
+        this.role = role;
         this.id = id;
-        this.user_id = user_id;
     }
-    // Create a new note
-    static create(note) {
+    // Create a new user
+    static create(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [result] = yield database_1.default.execute('INSERT INTO notes (title, content, user_id) VALUES (?, ?, ?)', [note.title, note.content, note.user_id]);
-            note.id = result.insertId;
-            return note;
+            const [result] = yield database_1.default.execute('INSERT INTO users (displayname, username, pw, role) VALUES (?, ?, ?, ?)', [user.displayname, user.username, user.pw, user.role]);
+            user.id = result.insertId;
+            return user;
         });
     }
-    // Get all notes
+    // Get all users
     static getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield database_1.default.query('SELECT * FROM notes');
+            const [rows] = yield database_1.default.query('SELECT * FROM users');
             return rows;
         });
     }
-    // Get a note by ID
+    // Get a user by ID
     static getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield database_1.default.query('SELECT * FROM notes WHERE user_id = ?', [id]);
+            const [rows] = yield database_1.default.query('SELECT * FROM users WHERE id = ?', [id]);
             if (rows.length === 0)
                 return null;
             return rows[0];
         });
     }
-    // Update a note
-    static update(id, note) {
+    // Update a user
+    static update(id, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [result] = yield database_1.default.execute('UPDATE notes SET title = ?, content = ? WHERE id = ?', [note.title, note.content, id]);
+            const [result] = yield database_1.default.execute('UPDATE users SET displayname = ?, username = ?, pw = ?, role = ? WHERE id = ?', [user.displayname, user.username, user.pw, user.role, id]);
             return result.affectedRows > 0;
         });
     }
-    // Delete a note
+    // Delete a user
     static delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [result] = yield database_1.default.execute('DELETE FROM notes WHERE id = ?', [id]);
+            const [result] = yield database_1.default.execute('DELETE FROM users WHERE id = ?', [id]);
             return result.affectedRows > 0;
         });
     }
 }
-exports.Note = Note;
+exports.User = User;

@@ -9,6 +9,9 @@ const pool = createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   charset: 'utf8mb4',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 console.log('Database Configuration:', {
