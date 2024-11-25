@@ -14,7 +14,6 @@ const port = process.env.PORT || 3000;
 
 
 app.use(express.json());
-app.use('/person', usersRouter);
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/docn', swaggerUi.serve, swaggerUi.setup(swaggerFile2));
 app.use(cors());

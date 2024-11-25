@@ -15,7 +15,6 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
-app.use('/person', users_1.default);
 app.use('/doc', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_output_json_1.default));
 app.use('/docn', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_output_notes_json_1.default));
 app.use((0, cors_1.default)());
